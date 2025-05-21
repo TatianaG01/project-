@@ -13,6 +13,27 @@ class SimpleEditor:
         self.thickness = 2
         self.start_x = self.start_y = None
         self.objects = []
+        self.start_x = self.start_y = None
+        self.objects = []
+
+        self.init_menu()
+
+        def init_menu(self):
+            frame = tk.Frame(self.root)
+            frame.pack()
+
+        tk.Button(frame, text="Лінія", command=lambda: self.set_shape("line")).pack(side="left")
+
+        tk.Button(frame, text="Прямокутник", command=lambda: self.set_shape("rect")).pack(side="left")
+        tk.Button(frame, text="Еліпс", command=lambda: self.set_shape("oval")).pack(side="left")
+
+        tk.Button(frame, text="Колір", command=self.choose_color).pack(side="left")
+
+        tk.Button(frame, text="Зберегти", command=self.save).pack(side="left")
+        tk.Button(frame, text="Завантажити", command=self.load).pack(side="left")
+
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()
