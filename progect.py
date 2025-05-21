@@ -13,8 +13,6 @@ class SimpleEditor:
         self.thickness = 2
         self.start_x = self.start_y = None
         self.objects = []
-        self.start_x = self.start_y = None
-        self.objects = []
 
         self.init_menu()
 
