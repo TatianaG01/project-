@@ -38,3 +38,11 @@ if __name__ == "__main__":
     app = SimpleEditor(root)
     root.mainloop()
 
+
+
+
+    def stop_draw(self, event):
+        x0, y0 = self.start_x, self.start_y
+        x1, y1 = event.x, event.y
+        shape = None
+
