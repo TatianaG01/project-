@@ -1,4 +1,7 @@
 import tkinter as tk
+from tkinter import colorchooser, filedialog
+import json
+
 
 class SimpleEditor:
     def __init__(self, root):
