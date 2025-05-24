@@ -15,6 +15,8 @@ class SimpleEditor:
         self.objects = []
 
         self.init_menu()
+        self.canvas.bind("<Button-1>", self.start_draw)
+        self.canvas.bind("<ButtonRelease-1>", self.stop_draw)
 
         def init_menu(self):
             frame = tk.Frame(self.root)
@@ -52,8 +54,8 @@ if __name__ == "__main__":
             shape = self.canvas.create_rectangle(x0, y0, x1, y1, outline=self.color, width=self.thickness)
         elif self.shape == "oval":
             shape = self.canvas.create_oval(x0, y0, x1, y1, outline=self.color, width=self.thickness)
-if shape:
-    self.objects.append((self.shape, x0, y0, x1, y1, self.color, self.thickness))
+        if shape:
+            self.objects.append((self.shape, x0, y0, x1, y1, self.color, self.thickness))
 
     def save(self):
         file = filedialog.asksaveasfilename(defaultextension=".json")
