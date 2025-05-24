@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import colorchooser, filedialog
 import json
 
-
 class SimpleEditor:
     def __init__(self, root):
         self.root = root
@@ -21,52 +20,41 @@ class SimpleEditor:
         self.canvas.bind("<Button-1>", self.start_draw)
         self.canvas.bind("<ButtonRelease-1>", self.stop_draw)
 
-        def init_menu(self):
-            frame = tk.Frame(self.root)
-            frame.pack()
+    def init_menu(self):
+        frame = tk.Frame(self.root)
+        frame.pack()
 
         tk.Button(frame, text="Лінія", command=lambda: self.set_shape("line")).pack(side="left")
-
         tk.Button(frame, text="Прямокутник", command=lambda: self.set_shape("rect")).pack(side="left")
         tk.Button(frame, text="Еліпс", command=lambda: self.set_shape("oval")).pack(side="left")
-
         tk.Button(frame, text="Колір", command=self.choose_color).pack(side="left")
-
         tk.Button(frame, text="Зберегти", command=self.save).pack(side="left")
         tk.Button(frame, text="Завантажити", command=self.load).pack(side="left")
 
-        def set_shape(self, shape):
-            self.shape = shape
+    def set_shape(self, shape):
+        self.shape = shape
 
-        def choose_color(self):
-            color = colorchooser.askcolor()[1]
-            if color:
-                self.color = color
+    def choose_color(self):
+        color = colorchooser.askcolor()[1]
+        if color:
+            self.color = color
 
-        def start_draw(self, event):
-            self.start_x = event.x
-            self.start_y = event.y
-
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = SimpleEditor(root)
-    root.mainloop()
-
-
-
+    def start_draw(self, event):
+        self.start_x = event.x
+        self.start_y = event.y
 
     def stop_draw(self, event):
         x0, y0 = self.start_x, self.start_y
         x1, y1 = event.x, event.y
         shape = None
 
-         if self.shape == "line":
+        if self.shape == "line":
             shape = self.canvas.create_line(x0, y0, x1, y1, fill=self.color, width=self.thickness)
         elif self.shape == "rect":
             shape = self.canvas.create_rectangle(x0, y0, x1, y1, outline=self.color, width=self.thickness)
         elif self.shape == "oval":
             shape = self.canvas.create_oval(x0, y0, x1, y1, outline=self.color, width=self.thickness)
+
         if shape:
             self.objects.append((self.shape, x0, y0, x1, y1, self.color, self.thickness))
 
@@ -75,7 +63,6 @@ if __name__ == "__main__":
         if file:
             with open(file, "w") as f:
                 json.dump(self.objects, f)
-
 
     def load(self):
         file = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
@@ -92,4 +79,8 @@ if __name__ == "__main__":
                 elif shape == "oval":
                     self.canvas.create_oval(x0, y0, x1, y1, outline=color, width=width)
 
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = SimpleEditor(root)
+    root.mainloop()
 
