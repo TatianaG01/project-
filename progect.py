@@ -46,3 +46,10 @@ if __name__ == "__main__":
         x1, y1 = event.x, event.y
         shape = None
 
+         if self.shape == "line":
+            shape = self.canvas.create_line(x0, y0, x1, y1, fill=self.color, width=self.thickness)
+        elif self.shape == "rect":
+            shape = self.canvas.create_rectangle(x0, y0, x1, y1, outline=self.color, width=self.thickness)
+        elif self.shape == "oval":
+            shape = self.canvas.create_oval(x0, y0, x1, y1, outline=self.color, width=self.thickness)
+
