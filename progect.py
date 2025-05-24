@@ -55,3 +55,10 @@ if __name__ == "__main__":
 if shape:
     self.objects.append((self.shape, x0, y0, x1, y1, self.color, self.thickness))
 
+    def save(self):
+        file = filedialog.asksaveasfilename(defaultextension=".json")
+        if file:
+            with open(file, "w") as f:
+                json.dump(self.objects, f)
+
+
