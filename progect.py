@@ -32,7 +32,17 @@ class SimpleEditor:
         tk.Button(frame, text="Зберегти", command=self.save).pack(side="left")
         tk.Button(frame, text="Завантажити", command=self.load).pack(side="left")
 
+        def set_shape(self, shape):
+            self.shape = shape
 
+        def choose_color(self):
+            color = colorchooser.askcolor()[1]
+            if color:
+                self.color = color
+
+        def start_draw(self, event):
+            self.start_x = event.x
+            self.start_y = event.y
 
 
 if __name__ == "__main__":
