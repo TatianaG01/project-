@@ -62,3 +62,19 @@ if shape:
                 json.dump(self.objects, f)
 
 
+    def load(self):
+        file = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
+        if file:
+            with open(file, "r") as f:
+                self.objects = json.load(f)
+            self.canvas.delete("all")
+            for obj in self.objects:
+                shape, x0, y0, x1, y1, color, width = obj
+                if shape == "line":
+                    self.canvas.create_line(x0, y0, x1, y1, fill=color, width=width)
+                elif shape == "rect":
+                    self.canvas.create_rectangle(x0, y0, x1, y1, outline=color, width=width)
+                elif shape == "oval":
+                    self.canvas.create_oval(x0, y0, x1, y1, outline=color, width=width)
+
+
