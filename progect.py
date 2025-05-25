@@ -12,7 +12,7 @@ class SimpleEditor:
         self.shape = "line"
         self.color = "black"
         self.border_color = "black"
-        self.thickness = 2
+        self.thickness = 1
         self.start_x = self.start_y = None
         self.objects = []
         self.fill_color = "white"
@@ -30,6 +30,13 @@ class SimpleEditor:
         tk.Button(frame, text="Прямокутник", command=lambda: self.set_shape("rect")).pack(side="left")
         tk.Button(frame, text="Еліпс", command=lambda: self.set_shape("oval")).pack(side="left")
         tk.Button(frame, text="Колір", command=self.choose_color).pack(side="left")
+
+        tk.Label(frame, text="Товщина").pack(side="left")
+        self.thickness_entry = tk.Entry(frame, width=3)
+        self.thickness_entry.insert(0, "1")  # значення за замовчуванням
+        self.thickness_entry.pack(side="left")
+        tk.Button(frame, text="ОК", command=self.set_thickness).pack(side="left")
+
         tk.Button(frame, text="Колір рамки", command=self.choose_border_color).pack(side="left")
         tk.Button(frame, text="Заливка фігури", command=self.choose_fill_color).pack(side="left")
         tk.Button(frame, text="Зберегти", command=self.save).pack(side="left")
@@ -53,6 +60,16 @@ class SimpleEditor:
         color = colorchooser.askcolor()[1]
         if color:
             self.fill_color = color
+
+    def set_thickness(self):
+        try:
+            value = int(self.thickness_entry.get())
+            if 1 <= value <= 10:
+                self.thickness = value
+            else:
+                print("Товщина має бути від 1 до 10")
+        except ValueError:
+            print("Введіть число")
 
     def start_draw(self, event):
         self.start_x = event.x
