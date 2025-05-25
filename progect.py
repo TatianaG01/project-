@@ -29,7 +29,6 @@ class SimpleEditor:
         tk.Button(frame, text="Лінія", command=lambda: self.set_shape("line")).pack(side="left")
         tk.Button(frame, text="Прямокутник", command=lambda: self.set_shape("rect")).pack(side="left")
         tk.Button(frame, text="Еліпс", command=lambda: self.set_shape("oval")).pack(side="left")
-        tk.Button(frame, text="Колір", command=self.choose_color).pack(side="left")
 
         tk.Label(frame, text="Товщина").pack(side="left")
         self.thickness_entry = tk.Entry(frame, width=3)
