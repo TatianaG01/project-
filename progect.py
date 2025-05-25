@@ -15,6 +15,8 @@ class SimpleEditor:
         self.thickness = 2
         self.start_x = self.start_y = None
         self.objects = []
+        self.fill_color = "white"
+
 
         self.init_menu()
         self.canvas.bind("<Button-1>", self.start_draw)
@@ -29,6 +31,7 @@ class SimpleEditor:
         tk.Button(frame, text="Еліпс", command=lambda: self.set_shape("oval")).pack(side="left")
         tk.Button(frame, text="Колір", command=self.choose_color).pack(side="left")
         tk.Button(frame, text="Колір рамки", command=self.choose_border_color).pack(side="left")
+        tk.Button(frame, text="Заливка фігури", command=self.choose_fill_color).pack(side="left")
         tk.Button(frame, text="Зберегти", command=self.save).pack(side="left")
         tk.Button(frame, text="Завантажити", command=self.load).pack(side="left")
 
@@ -46,6 +49,11 @@ class SimpleEditor:
         if color:
             self.border_color = color
 
+    def choose_fill_color(self):
+        color = colorchooser.askcolor()[1]
+        if color:
+            self.fill_color = color
+
     def start_draw(self, event):
         self.start_x = event.x
         self.start_y = event.y
@@ -58,13 +66,13 @@ class SimpleEditor:
         if self.shape == "line":
             shape = self.canvas.create_line(x0, y0, x1, y1, fill=self.border_color, width=self.thickness)
         elif self.shape == "rect":
-            shape = self.canvas.create_rectangle(x0, y0, x1, y1, outline=self.border_color, fill=self.color,
+            shape = self.canvas.create_rectangle(x0, y0, x1, y1, outline=self.border_color, fill=self.fill_color,
                                                  width=self.thickness)
         elif self.shape == "oval":
-            shape = self.canvas.create_oval(x0, y0, x1, y1, outline=self.border_color, fill=self.color,
+            shape = self.canvas.create_oval(x0, y0, x1, y1, outline=self.border_color, fill=self.fill_color,
                                             width=self.thickness)
         if shape:
-            self.objects.append((self.shape, x0, y0, x1, y1, self.color, self.border_color, self.thickness))
+            self.objects.append((self.shape, x0, y0, x1, y1, self.fill_color, self.border_color, self.thickness))
 
     def save(self):
         file = filedialog.asksaveasfilename(defaultextension=".json")
