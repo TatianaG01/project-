@@ -63,6 +63,8 @@ class SimpleEditor:
         elif self.shape == "oval":
             shape = self.canvas.create_oval(x0, y0, x1, y1, outline=self.border_color, fill=self.color,
                                             width=self.thickness)
+        if shape:
+            self.objects.append((self.shape, x0, y0, x1, y1, self.color, self.border_color, self.thickness))
 
     def save(self):
         file = filedialog.asksaveasfilename(defaultextension=".json")
@@ -73,6 +75,7 @@ class SimpleEditor:
     def load(self):
         file = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
         if file:
+            self.objects.clear()
             with open(file, "r") as f:
                 self.objects = json.load(f)
             self.canvas.delete("all")
@@ -81,7 +84,7 @@ class SimpleEditor:
                 if shape == "line":
                     self.canvas.create_line(x0, y0, x1, y1, fill=border_color, width=width)
                 elif shape == "rect":
-                    self.canvas.create_rectangle(x0, y0, x1, y1, outline=color, fill=fill_color , width=width)
+                    self.canvas.create_rectangle(x0, y0, x1, y1, outline=border_color, fill=fill_color , width=width)
                 elif shape == "oval":
                     self.canvas.create_oval(x0, y0, x1, y1, outline=border_color,fill=fill_color ,width=width)
 
