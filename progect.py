@@ -28,8 +28,10 @@ class SimpleEditor:
         tk.Button(frame, text="Прямокутник", command=lambda: self.set_shape("rect")).pack(side="left")
         tk.Button(frame, text="Еліпс", command=lambda: self.set_shape("oval")).pack(side="left")
         tk.Button(frame, text="Колір", command=self.choose_color).pack(side="left")
+        tk.Button(frame, text="Колір рамки", command=self.choose_border_color).pack(side="left")
         tk.Button(frame, text="Зберегти", command=self.save).pack(side="left")
         tk.Button(frame, text="Завантажити", command=self.load).pack(side="left")
+
 
     def set_shape(self, shape):
         self.shape = shape
@@ -38,6 +40,11 @@ class SimpleEditor:
         color = colorchooser.askcolor()[1]
         if color:
             self.color = color
+
+    def choose_border_color(self):
+        color = colorchooser.askcolor()[1]
+        if color:
+            self.border_color = color
 
     def start_draw(self, event):
         self.start_x = event.x
@@ -49,14 +56,13 @@ class SimpleEditor:
         shape = None
 
         if self.shape == "line":
-            shape = self.canvas.create_line(x0, y0, x1, y1, fill=self.color, width=self.thickness)
+            shape = self.canvas.create_line(x0, y0, x1, y1, fill=self.border_color, width=self.thickness)
         elif self.shape == "rect":
-            shape = self.canvas.create_rectangle(x0, y0, x1, y1, outline=self.color, width=self.thickness)
+            shape = self.canvas.create_rectangle(x0, y0, x1, y1, outline=self.border_color, fill=self.color,
+                                                 width=self.thickness)
         elif self.shape == "oval":
-            shape = self.canvas.create_oval(x0, y0, x1, y1, outline=self.color, width=self.thickness)
-
-        if shape:
-            self.objects.append((self.shape, x0, y0, x1, y1, self.color, self.thickness))
+            shape = self.canvas.create_oval(x0, y0, x1, y1, outline=self.border_color, fill=self.color,
+                                            width=self.thickness)
 
     def save(self):
         file = filedialog.asksaveasfilename(defaultextension=".json")
@@ -71,13 +77,13 @@ class SimpleEditor:
                 self.objects = json.load(f)
             self.canvas.delete("all")
             for obj in self.objects:
-                shape, x0, y0, x1, y1, color, width = obj
+                shape, x0, y0, x1, y1, fill_color, border_color, width = obj
                 if shape == "line":
-                    self.canvas.create_line(x0, y0, x1, y1, fill=color, width=width)
+                    self.canvas.create_line(x0, y0, x1, y1, fill=border_color, width=width)
                 elif shape == "rect":
-                    self.canvas.create_rectangle(x0, y0, x1, y1, outline=color, width=width)
+                    self.canvas.create_rectangle(x0, y0, x1, y1, outline=color, fill=fill_color , width=width)
                 elif shape == "oval":
-                    self.canvas.create_oval(x0, y0, x1, y1, outline=color, width=width)
+                    self.canvas.create_oval(x0, y0, x1, y1, outline=border_color,fill=fill_color ,width=width)
 
 if __name__ == "__main__":
     root = tk.Tk()
